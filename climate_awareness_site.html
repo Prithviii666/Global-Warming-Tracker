@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Crisis Awareness - Track Global Warming</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b35;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f7931e;stop-opacity:1" /></linearGradient></defs><rect width="1000" height="600" fill="url(%23sky)"/><circle cx="150" cy="150" r="60" fill="%23ffeb3b" opacity="0.9"/><polygon points="200,400 300,350 400,380 500,320 600,340 700,300 800,320 900,280 1000,300 1000,600 0,600" fill="%23388e3c"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .consequences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .consequence-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .consequence-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .consequence-card h3 {
+            color: #e74c3c;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .temperature-display {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .temp-value {
+            font-size: 4rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .world-map {
+            background: #2c3e50;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .action-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .action-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .action-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .temperature-trend {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to right, #74b9ff, #0984e3, #6c5ce7, #a29bfe, #fd79a8, #e84393);
+            border-radius: 10px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .year-bar {
+            background: rgba(255,255,255,0.8);
+            color: #333;
+            padding: 10px 5px;
+            border-radius: 5px;
+            text-align: center;
+            min-width: 60px;
+            transition: all 0.3s ease;
+        }
+
+        .year-bar:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+            
+            .temp-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Climate Crisis Alert</h1>
+            <p>Track Global Warming • Understand the Impact • Take Action</p>
+            <a href="#consequences" class="cta-button">Learn More</a>
+        </div>
+    </div>
+
+    <div class="section" id="consequences">
+        <div class="container">
+            <h2>The Devastating Consequences of Global Warming</h2>
+            
+            <div class="consequences-grid">
+                <div class="consequence-card">
+                    <h3>🌡️ Rising Temperatures</h3>
+                    <p>Global average temperatures have risen by 1.1°C since pre-industrial times. Heat waves are becoming more frequent and intense, causing droughts, wildfires, and making many regions uninhabitable.</p>
+                </div>
+                
+                <div class="consequence-card">
+                    <h3>🌊 Sea Level Rise</h3>
+                    <p>Melting ice caps and thermal expansion cause sea levels to rise 3.3mm annually. Coastal cities face flooding, and entire island nations risk disappearing underwater within decades.</p>
+                </div>
+                
+                <div class="consequence-card">
+                    <h3>🌪️ Extreme Weather</h3>
+                    <p>Climate change intensifies hurricanes, tornadoes, and storms. Weather patterns become unpredictable, causing massive property damage and threatening lives worldwide.</p>
+                </div>
+                
+                <div class="consequence-card">
+                    <h3>🐧 Ecosystem Collapse</h3>
+                    <p>Arctic ice melting destroys polar bear habitats. Ocean acidification kills coral reefs. Species extinction rates are 100-1,000 times higher than natural rates.</p>
+                </div>
+                
+                <div class="consequence-card">
+                    <h3>🌾 Food Security Crisis</h3>
+                    <p>Changing weather patterns disrupt agriculture. Crop yields decrease due to droughts, floods, and shifting seasons. Food prices soar, threatening global food security.</p>
+                </div>
+                
+                <div class="consequence-card">
+                    <h3>💧 Water Scarcity</h3>
+                    <p>Glaciers that supply freshwater to billions are melting. Droughts intensify while some regions face devastating floods. Clean water access becomes increasingly scarce.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Global Temperature Tracking</h2>
+            
+            <div class="temperature-display">
+                <h3>Current Global Temperature Anomaly</h3>
+                <div class="temp-value" id="current-temp">+1.2°C</div>
+                <p>Above 1880-1920 baseline average</p>
+                <p><small>Last updated: <span id="last-updated">Today</span></small></p>
+            </div>
+
+            <div class="chart-container">
+                <h3>Temperature Rise Over Time</h3>
+                <div class="temperature-trend">
+                    <div class="year-bar" style="height: 20%;">
+                        <div>1880</div>
+                        <div>-0.2°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 35%;">
+                        <div>1920</div>
+                        <div>-0.1°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 45%;">
+                        <div>1960</div>
+                        <div>+0.1°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 65%;">
+                        <div>1980</div>
+                        <div>+0.4°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 75%;">
+                        <div>2000</div>
+                        <div>+0.6°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 85%;">
+                        <div>2010</div>
+                        <div>+0.8°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 95%;">
+                        <div>2020</div>
+                        <div>+1.0°C</div>
+                    </div>
+                    <div class="year-bar" style="height: 100%;">
+                        <div>2024</div>
+                        <div>+1.2°C</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="world-map">
+                <h3>Global Warming Hotspots</h3>
+                <div class="map-placeholder">
+                    🌍 Interactive World Map
+                    <br>
+                    <small>Arctic: +2.3°C | Europe: +1.8°C | North America: +1.5°C | Asia: +1.4°C</small>
+                </div>
+                <p>Red zones show areas experiencing the most severe temperature increases</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <h2>Alarming Statistics</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">415ppm</div>
+                    <p>Atmospheric CO₂ levels - highest in 3 million years</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">28%</div>
+                    <p>Arctic sea ice decline per decade</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">1 Million</div>
+                    <p>Species at risk of extinction</p>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">630M</div>
+                    <p>People at risk from sea level rise</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section action-section">
+        <div class="container">
+            <h2>Take Action Now</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Every action counts in the fight against climate change</p>
+            
+            <div class="action-grid">
+                <div class="action-card">
+                    <h3>🌱 Reduce Carbon Footprint</h3>
+                    <p>Use renewable energy, drive less, eat less meat, and choose sustainable products</p>
+                </div>
+                
+                <div class="action-card">
+                    <h3>🗳️ Vote for Climate Action</h3>
+                    <p>Support politicians and policies that prioritize environmental protection and clean energy</p>
+                </div>
+                
+                <div class="action-card">
+                    <h3>📢 Spread Awareness</h3>
+                    <p>Share this information, educate others, and encourage friends and family to take action</p>
+                </div>
+                
+                <div class="action-card">
+                    <h3>💚 Support Green Organizations</h3>
+                    <p>Donate to environmental groups working on climate solutions and conservation efforts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <h3>Time is Running Out</h3>
+            <p>We have less than a decade to limit global warming to 1.5°C and avoid catastrophic climate change.</p>
+            <p>© 2024 Climate Crisis Awareness • Together We Can Make a Difference</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulate real-time temperature updates
+        function updateTemperature() {
+            const tempElement = document.getElementById('current-temp');
+            const lastUpdatedElement = document.getElementById('last-updated');
+            
+            // Simulate slight variations in temperature anomaly
+            const baseTemp = 1.2;
+            const variation = (Math.random() - 0.5) * 0.1;
+            const currentTemp = baseTemp + variation;
+            
+            tempElement.textContent = `+${currentTemp.toFixed(2)}°C`;
+            lastUpdatedElement.textContent = new Date().toLocaleTimeString();
+        }
+
+        // Update temperature every 30 seconds
+        setInterval(updateTemperature, 30000);
+
+        // Animate elements when they come into view
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.consequence-card, .stat-card, .action-card');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Smooth scrolling for CTA button
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#consequences').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Add hover effects to temperature bars
+        document.querySelectorAll('.year-bar').forEach(bar => {
+            bar.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1)';
+                this.style.zIndex = '10';
+            });
+            
+            bar.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Initialize
+        animateOnScroll();
+    </script>
+</body>
+</html>
